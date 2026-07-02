@@ -1,0 +1,5 @@
+[
+  { "id": "group-1", "name": "Group 1", "correctImageId": "circle", "studentCount": 67 },
+  { "id": "group-2", "name": "Group 2", "correctImageId": "square", "studentCount": 67 },
+  { "id": "group-3", "name": "Group 3", "correctImageId": "triangle", "studentCount": 66 }
+]

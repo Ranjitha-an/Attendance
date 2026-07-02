@@ -1,0 +1,12 @@
+{
+  "defaultTimerSeconds": 15,
+  "extendSeconds": 15,
+  "maxAttendanceRounds": 3,
+  "bootcampCourse": "Full Stack Bootcamp",
+  "bootcampBatch": "Bootcamp Batch",
+  "roundStats": [
+    { "presentPercent": 67, "absentPercent": 33 },
+    { "presentPercent": 72, "absentPercent": 28 },
+    { "presentPercent": 58, "absentPercent": 42 }
+  ]
+}

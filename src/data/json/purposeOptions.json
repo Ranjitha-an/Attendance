@@ -1,0 +1,6 @@
+[
+  { "value": "onsite", "label": "Onsite Workshop" },
+  { "value": "test", "label": "Test" },
+  { "value": "live", "label": "Live Sessions" },
+  { "value": "others", "label": "Others" }
+]

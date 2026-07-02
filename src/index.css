@@ -1,0 +1,216 @@
+:root {
+  --brand-primary: #4168a3;
+  --brand-primary-dark: #2d4f7c;
+  --brand-primary-light: #e8f0fc;
+  --brand-secondary: #b85450;
+  --brand-bg: #f5f6f8;
+  --brand-text: #1a1a2e;
+  --brand-text-muted: #555555;
+  --header-height: 56px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Jura", sans-serif;
+  background-color: var(--brand-bg);
+  color: var(--brand-text);
+}
+
+.app-header {
+  height: var(--header-height);
+  background-color: #ffffff;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.app-main {
+  padding-top: calc(var(--header-height) + 1.5rem);
+  padding-bottom: 2rem;
+  min-height: 100vh;
+}
+
+.brand-logo-box {
+  width: 115px;
+  height: 40px;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.brand-logo-text {
+  font-size: 0.65rem;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.brand-logo-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.page-title {
+  font-weight: 800;
+  color: var(--brand-primary);
+}
+
+.section-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.btn-brand {
+  background-color: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: #ffffff;
+}
+
+.btn-brand:hover,
+.btn-brand:focus {
+  background-color: var(--brand-primary-dark);
+  border-color: var(--brand-primary-dark);
+  color: #ffffff;
+}
+
+.btn-outline-brand {
+  color: var(--brand-primary);
+  border-color: var(--brand-primary);
+}
+
+.btn-outline-brand:hover,
+.btn-outline-brand:focus {
+  background-color: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: #ffffff;
+}
+
+.home-hero {
+  background-color: var(--brand-primary);
+  min-height: 100vh;
+}
+
+.home-hero-text {
+  color: #ffffff;
+}
+
+.home-tagline {
+  background: linear-gradient(to right, #f5d547, #48e28f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.role-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.role-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(65, 104, 163, 0.2);
+  border-color: var(--brand-primary);
+}
+
+.role-card-icon {
+  font-size: 3rem;
+  color: var(--brand-primary);
+}
+
+.table-header-dark {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.table-header-dark th {
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.attendance-image-tile {
+  width: 140px;
+  height: 140px;
+  border: 3px solid #dee2e6;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  object-fit: contain;
+  background-color: #ffffff;
+}
+
+.attendance-image-tile:hover {
+  border-color: var(--brand-primary);
+  transform: scale(1.03);
+}
+
+.attendance-image-tile.selected {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px var(--brand-primary-light);
+}
+
+.attendance-image-tile.correct {
+  border-color: #198754;
+}
+
+.attendance-image-tile.wrong {
+  border-color: #dc3545;
+}
+
+.trainer-shown-image {
+  width: 180px;
+  height: 180px;
+  border: 4px solid var(--brand-primary);
+  border-radius: 12px;
+  object-fit: contain;
+  background-color: #ffffff;
+}
+
+.group-card {
+  border-left: 4px solid var(--brand-primary);
+}
+
+.summary-bar {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+}
+
+.timer-badge {
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+}
+
+.filter-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--brand-text-muted);
+}
+
+.report-row-clickable {
+  cursor: pointer;
+}
+
+.report-row-clickable:hover {
+  background-color: var(--brand-primary-light);
+}
+
+.nested-attendance-row td {
+  border-top: none;
+}
+
+.status-present {
+  color: #198754;
+  font-weight: 700;
+}
+
+.status-absent {
+  color: #dc3545;
+  font-weight: 700;
+}

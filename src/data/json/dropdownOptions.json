@@ -1,0 +1,15 @@
+{
+  "courses": ["12 M Mega", "FY Project", "Full Stack Bootcamp", "Data Science"],
+  "bootcamps": ["Full Stack Bootcamp", "Data Science Bootcamp", "Java Bootcamp", "Python Bootcamp"],
+  "batches": ["MRIT", "EWIT", "BMSIT", "RVCE", "PES"],
+  "colleges": ["All Colleges", "MRIT College", "EWIT College"],
+  "branches": ["All", "CSE", "ISE", "ECE"],
+  "subjects": ["SQL Workshop", "React Basics", "Python Fundamentals"],
+  "tests": ["Final Test", "Practice Test", "Mock Test", "Drive Test"],
+  "liveClasses": ["Live Class 1", "Live Class 2", "Live Class 3"],
+  "remarkOptions": [
+    "SELECTED WRONG IMAGE",
+    "CAME LATE",
+    "INTERNET PROBLEM"
+  ]
+}

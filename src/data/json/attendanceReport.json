@@ -1,0 +1,29 @@
+[
+  {
+    "slNo": 1,
+    "date": "24th April 2027",
+    "purpose": "Test",
+    "course": "12 M Mega",
+    "batch": "MRIT",
+    "branch": "All",
+    "name": "SQL Workshop",
+    "attendanceRounds": [
+      { "roundNo": 1, "label": "Att 01", "presentPercent": 56, "absentPercent": 44, "total": 200 },
+      { "roundNo": 2, "label": "Att 02", "presentPercent": 62, "absentPercent": 38, "total": 200 },
+      { "roundNo": 3, "label": "Att 03", "presentPercent": 58, "absentPercent": 42, "total": 200 }
+    ]
+  },
+  {
+    "slNo": 2,
+    "date": "15th Mar 2027",
+    "purpose": "Onsite W",
+    "course": "FY Project",
+    "batch": "EWIT",
+    "branch": "All",
+    "name": "React Basics",
+    "attendanceRounds": [
+      { "roundNo": 1, "label": "Att 01", "presentPercent": 71, "absentPercent": 29, "total": 180 },
+      { "roundNo": 2, "label": "Att 02", "presentPercent": 68, "absentPercent": 32, "total": 180 }
+    ]
+  }
+]

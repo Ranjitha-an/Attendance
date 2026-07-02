@@ -1,0 +1,15 @@
+{
+  "studentName": "Rahul Kumar",
+  "studentId": "STU-1024",
+  "course": "12 M Mega",
+  "batch": "MRIT",
+  "college": "MRIT College",
+  "stream": "CSE",
+  "overallAttendancePercent": 67,
+  "batchAverage": 62,
+  "records": [
+    { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "Y", "remark": "" },
+    { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "N", "remark": "" },
+    { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "Y", "remark": "" }
+  ]
+}
