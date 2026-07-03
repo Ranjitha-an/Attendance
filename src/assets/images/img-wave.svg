@@ -1,4 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
-  <rect width="120" height="120" fill="#fce8f0"/>
-  <path d="M30 60 Q60 20 90 60 Q60 100 30 60" fill="#e91e8c"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <rect width="120" height="120" fill="#fffbeb"/>
+  <rect x="30" y="34" width="46" height="46" rx="12" fill="#ef4444" opacity="0.68" transform="rotate(16 53 57)"/>
+  <rect x="46" y="44" width="40" height="40" rx="11" fill="#3b82f6" opacity="0.68" transform="rotate(-28 66 64)"/>
+  <rect x="38" y="56" width="30" height="30" rx="9" fill="#10b981" opacity="0.78" transform="rotate(46 53 71)"/>
+  <rect x="60" y="34" width="22" height="22" rx="7" fill="#f59e0b" opacity="0.8" transform="rotate(30 71 45)"/>
 </svg>

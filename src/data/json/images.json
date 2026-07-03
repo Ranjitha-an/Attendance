@@ -1,10 +1,10 @@
 [
-  { "id": "circle", "label": "Circle", "file": "img-circle.svg" },
-  { "id": "square", "label": "Square", "file": "img-square.svg" },
-  { "id": "triangle", "label": "Triangle", "file": "img-triangle.svg" },
-  { "id": "diamond", "label": "Diamond", "file": "img-diamond.svg" },
-  { "id": "hexagon", "label": "Hexagon", "file": "img-hexagon.svg" },
-  { "id": "cross", "label": "Cross", "file": "img-cross.svg" },
-  { "id": "wave", "label": "Wave", "file": "img-wave.svg" },
-  { "id": "double", "label": "Double", "file": "img-double.svg" }
+  { "id": "circle", "label": "Pattern A", "file": "img-circle.svg" },
+  { "id": "square", "label": "Pattern B", "file": "img-square.svg" },
+  { "id": "triangle", "label": "Pattern C", "file": "img-triangle.svg" },
+  { "id": "diamond", "label": "Pattern D", "file": "img-diamond.svg" },
+  { "id": "hexagon", "label": "Pattern E", "file": "img-hexagon.svg" },
+  { "id": "cross", "label": "Pattern F", "file": "img-cross.svg" },
+  { "id": "wave", "label": "Pattern G", "file": "img-wave.svg" },
+  { "id": "double", "label": "Pattern H", "file": "img-double.svg" }
 ]

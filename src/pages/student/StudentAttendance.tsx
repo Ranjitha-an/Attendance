@@ -93,14 +93,13 @@ export default function StudentAttendance() {
                     <Col xs={6} md={4} lg={3} key={img.id} className="text-center">
                       <img
                         src={img.src}
-                        alt={img.label}
+                        alt="Attendance option"
                         className={tileClass}
                         onClick={() => handleImageSelect(img.id)}
                         role="button"
                         tabIndex={0}
                         onKeyDown={(e) => e.key === "Enter" && handleImageSelect(img.id)}
                       />
-                      <p className="mt-2 mb-0">{img.label}</p>
                     </Col>
                   );
                 })}

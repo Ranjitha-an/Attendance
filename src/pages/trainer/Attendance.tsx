@@ -80,16 +80,13 @@ export default function Attendance() {
     const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
     const pageWidth = pdf.internal.pageSize.getWidth();
 
-    pdf.setFontSize(16);
-    pdf.text("Group Images", pageWidth / 2, 15, { align: "center" });
-
     const perRow = 3;
     const margin = 15;
     const gap = 12;
     const cellSize = (pageWidth - margin * 2 - gap * (perRow - 1)) / perRow;
-    const rowHeight = cellSize + 25;
+    const rowHeight = cellSize + gap;
     let x = margin;
-    let y = 25;
+    let y = margin;
 
     for (let i = 0; i < groups.length; i++) {
       const group = groups[i];
@@ -97,11 +94,7 @@ export default function Attendance() {
       if (!image) continue;
 
       const png = await rasterizeImage(image.src);
-      pdf.setFontSize(12);
-      pdf.text(group.name, x + cellSize / 2, y + 5, { align: "center" });
-      pdf.addImage(png, "PNG", x, y + 8, cellSize, cellSize);
-      pdf.setFontSize(10);
-      pdf.text(image.label, x + cellSize / 2, y + cellSize + 15, { align: "center" });
+      pdf.addImage(png, "PNG", x, y, cellSize, cellSize);
 
       if ((i + 1) % perRow === 0) {
         x = margin;
@@ -277,15 +270,13 @@ export default function Attendance() {
                 const correctImage = getImageById(group.correctImageId);
                 return (
                   <Col xs={6} md={4} key={group.id} className="text-center">
-                    <h5 className="fw-bold mb-3">{group.name}</h5>
                     {correctImage && (
                       <img
                         src={correctImage.src}
-                        alt={correctImage.label}
+                        alt="Group image"
                         className="preview-group-image"
                       />
                     )}
-                    <p className="text-muted mt-2 mb-0">{correctImage?.label}</p>
                   </Col>
                 );
               })}

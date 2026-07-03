@@ -1,4 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
-  <rect width="120" height="120" fill="#fde8e8"/>
-  <rect x="25" y="25" width="70" height="70" fill="#b85450"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <rect width="120" height="120" fill="#eef7f0"/>
+  <polygon points="0,-16 14,11 -14,11" fill="#e74c3c" transform="translate(40 44) rotate(18)"/>
+  <polygon points="0,-16 14,11 -14,11" fill="#3498db" transform="translate(78 54) rotate(-38)"/>
+  <polygon points="0,-16 14,11 -14,11" fill="#9b59b6" transform="translate(54 82) rotate(122)"/>
+  <polygon points="0,-12 10,8 -10,8" fill="#f39c12" transform="translate(86 86) rotate(205)"/>
+  <polygon points="0,-12 10,8 -10,8" fill="#1abc9c" transform="translate(30 78) rotate(72)"/>
 </svg>

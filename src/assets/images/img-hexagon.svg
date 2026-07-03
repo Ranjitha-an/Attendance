@@ -1,4 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
-  <rect width="120" height="120" fill="#f0e8fc"/>
-  <polygon points="60,10 110,60 60,110 10,60" fill="#7b4fa3"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <rect width="120" height="120" fill="#ecfeff"/>
+  <rect x="-25" y="28" width="170" height="15" fill="#f43f5e" transform="rotate(26 60 60)" opacity="0.8"/>
+  <rect x="-25" y="53" width="170" height="15" fill="#0ea5e9" transform="rotate(-42 60 60)" opacity="0.8"/>
+  <rect x="-25" y="74" width="170" height="11" fill="#22c55e" transform="rotate(68 60 60)" opacity="0.8"/>
+  <rect x="-25" y="90" width="170" height="8" fill="#f59e0b" transform="rotate(-12 60 60)" opacity="0.8"/>
 </svg>
