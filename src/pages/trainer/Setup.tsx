@@ -165,9 +165,6 @@ export default function Setup() {
                               </option>
                             ))}
                           </Form.Select>
-                          <Form.Text className="text-muted">
-                            LMS checks whether the selected Test is mapped for the Batch.
-                          </Form.Text>
                         </>
                       )}
                       {purpose === "live" && (

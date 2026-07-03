@@ -1,0 +1,172 @@
+{
+  "course": "12 M Mega",
+  "batch": "MRIT",
+  "college": "MRIT College",
+  "stream": "CSE",
+  "overallAttendancePercent": 67,
+  "batchAverage": 62,
+  "students": [
+  {
+    "studentName": "Rahul Kumar",
+    "studentId": "STU-1024",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "Y", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "N", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "Y", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Priya Sharma",
+    "studentId": "STU-1025",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "Y", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "Y", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "N", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Amit Patel",
+    "studentId": "STU-1026",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "N", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "Y", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "Y", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Sneha Reddy",
+    "studentId": "STU-1027",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "Y", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "Y", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "Y", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Vikram Singh",
+    "studentId": "STU-1028",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "N", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "N", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "Y", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Ananya Iyer",
+    "studentId": "STU-1029",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "Y", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "N", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "Y", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Karthik Nair",
+    "studentId": "STU-1030",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "Y", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "Y", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "Y", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Divya Menon",
+    "studentId": "STU-1031",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "N", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "Y", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "N", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Rohan Das",
+    "studentId": "STU-1032",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "Y", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "Y", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "Y", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Meera Joshi",
+    "studentId": "STU-1033",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "Y", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "N", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "Y", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Arjun Gupta",
+    "studentId": "STU-1034",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "N", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "N", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "N", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Lakshmi Rao",
+    "studentId": "STU-1035",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "Y", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "Y", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "Y", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Suresh Babu",
+    "studentId": "STU-1036",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "Y", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "Y", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "N", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Kavya Pillai",
+    "studentId": "STU-1037",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "Y", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "Y", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "Y", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Nikhil Verma",
+    "studentId": "STU-1038",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "N", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "Y", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "Y", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Pooja Hegde",
+    "studentId": "STU-1039",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "Y", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "N", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "Y", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Aditya Malhotra",
+    "studentId": "STU-1040",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "Y", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "Y", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "N", "remark": "" }
+    ]
+  },
+  {
+    "studentName": "Shruti Bhat",
+    "studentId": "STU-1041",
+    "records": [
+      { "slNo": 1, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 01", "present": "Y", "remark": "" },
+      { "slNo": 2, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 02", "present": "Y", "remark": "" },
+      { "slNo": 3, "date": "24th April 2027", "purpose": "Test", "attendanceNo": "Att 03", "present": "Y", "remark": "" }
+    ]
+  }
+  ]
+}

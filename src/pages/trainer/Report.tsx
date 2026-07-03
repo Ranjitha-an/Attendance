@@ -1,11 +1,35 @@
-import { useState } from "react";
-import { Button, Card, Col, Container, Form, Row, Table } from "react-bootstrap";
+import { useCallback, useMemo, useState } from "react";
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import {
+  DataGrid,
+  GridToolbar,
+  type GridColDef,
+  type GridRowParams,
+} from "@mui/x-data-grid";
+import Box from "@mui/material/Box";
 import Header from "../../components/Header";
 import MultiSelectDropdown from "../../components/MultiSelectDropdown";
+import { applyColumnFilters, withFilterHeaders } from "../../components/GridColumnFilter";
 import { BATCHES, BRANCHES, COLLEGES, COURSES, MOCK_ATTENDANCE_REPORT } from "../../data/mockData";
+import type { AttendanceReportRow } from "../../data/mockData";
 
 const PURPOSES = Array.from(new Set(MOCK_ATTENDANCE_REPORT.map((row) => row.purpose)));
+
+interface FlatReportRow {
+  id: string;
+  slNo: number;
+  date: string;
+  purpose: string;
+  course: string;
+  batch: string;
+  branch: string;
+  name: string;
+  attendanceNo: string;
+  totalPresent: string;
+  absent: string;
+  reportRow: AttendanceReportRow;
+}
 
 export default function Report() {
   const navigate = useNavigate();
@@ -15,22 +39,67 @@ export default function Report() {
   const [college, setCollege] = useState(COLLEGES[0]);
   const [branch, setBranch] = useState(BRANCHES[0]);
   const [purpose, setPurpose] = useState("All");
+  const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
+  const [showFilters, setShowFilters] = useState(false);
 
-  const filteredRows = MOCK_ATTENDANCE_REPORT.filter((row) => {
+  const handleFilterChange = useCallback((field: string, value: string) => {
+    setColumnFilters((prev) => ({ ...prev, [field]: value }));
+  }, []);
+
+  const flatRows = useMemo<FlatReportRow[]>(() => {
+    return MOCK_ATTENDANCE_REPORT.flatMap((row) =>
+      row.attendanceRounds.map((round) => ({
+        id: `${row.slNo}-${round.roundNo}`,
+        slNo: row.slNo,
+        date: row.date,
+        purpose: row.purpose,
+        course: row.course,
+        batch: row.batch,
+        branch: row.branch,
+        name: row.name ?? "",
+        attendanceNo: round.label,
+        totalPresent: `${round.total} / ${Math.round((round.presentPercent / 100) * round.total)} (${round.presentPercent}%)`,
+        absent: `${Math.round((round.absentPercent / 100) * round.total)} (${round.absentPercent}%)`,
+        reportRow: row,
+      })),
+    );
+  }, []);
+
+  const filteredRows = flatRows.filter((row) => {
     if (course !== "All" && row.course !== course) return false;
     if (batches.length > 0 && !batches.includes(row.batch)) return false;
+    if (college !== "All Colleges" && college !== "All" && row.batch !== college.replace(" College", "")) return false;
     if (branch !== "All" && row.branch !== branch) return false;
     if (purpose !== "All" && row.purpose !== purpose) return false;
     return true;
   });
 
-  const handleRowClick = (row: (typeof MOCK_ATTENDANCE_REPORT)[0]) => {
+  const displayedRows = applyColumnFilters(filteredRows, columnFilters);
+
+  const handleRowClick = (params: GridRowParams<FlatReportRow>) => {
     navigate("/trainer/report/student", {
       state: {
-        reportRow: row,
+        reportRow: params.row.reportRow,
+        attendanceNo: params.row.attendanceNo,
       },
     });
   };
+
+  const columns = useMemo<GridColDef<FlatReportRow>[]>(() => {
+    const base: GridColDef<FlatReportRow>[] = [
+      { field: "slNo", headerName: "Sl No", width: 70 },
+      { field: "date", headerName: "Date", width: 140 },
+      { field: "purpose", headerName: "Purpose", width: 110 },
+      { field: "course", headerName: "Course", width: 150 },
+      { field: "batch", headerName: "Batch", width: 100 },
+      { field: "branch", headerName: "Branch", width: 90 },
+      { field: "name", headerName: "Name", flex: 1, minWidth: 130 },
+      { field: "attendanceNo", headerName: "Attendance No", width: 120 },
+      { field: "totalPresent", headerName: "Total / Present", width: 160 },
+      { field: "absent", headerName: "Absent", width: 120 },
+    ];
+    return withFilterHeaders(base, handleFilterChange, showFilters);
+  }, [handleFilterChange, showFilters]);
 
   return (
     <>
@@ -100,68 +169,41 @@ export default function Report() {
 
           <Card className="section-card">
             <Card.Body className="p-0">
-              <div className="table-responsive">
-                <Table bordered hover className="mb-0">
-                  <thead className="table-header-dark">
-                    <tr>
-                      <th rowSpan={2}>Sl No</th>
-                      <th rowSpan={2}>Date</th>
-                      <th rowSpan={2}>Purpose</th>
-                      <th rowSpan={2}>Course</th>
-                      <th rowSpan={2}>Batch</th>
-                      <th rowSpan={2}>Branch</th>
-                      <th rowSpan={2}>Name</th>
-                      <th colSpan={3} className="text-center">
-                        Attendance Summary
-                      </th>
-                    </tr>
-                    <tr>
-                      <th>Attendance No</th>
-                      <th>Total / Present</th>
-                      <th>Absent</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredRows.length === 0 && (
-                      <tr>
-                        <td colSpan={10} className="text-center text-muted py-4">
-                          No records match the selected filters.
-                        </td>
-                      </tr>
-                    )}
-                    {filteredRows.map((row) =>
-                      row.attendanceRounds.map((round, idx) => (
-                        <tr
-                          key={`${row.slNo}-${round.roundNo}`}
-                          className={`report-row-clickable ${idx > 0 ? "nested-attendance-row" : ""}`}
-                          onClick={() => handleRowClick(row)}
-                        >
-                          {idx === 0 && (
-                            <>
-                              <td rowSpan={row.attendanceRounds.length}>{row.slNo}</td>
-                              <td rowSpan={row.attendanceRounds.length}>{row.date}</td>
-                              <td rowSpan={row.attendanceRounds.length}>{row.purpose}</td>
-                              <td rowSpan={row.attendanceRounds.length}>{row.course}</td>
-                              <td rowSpan={row.attendanceRounds.length}>{row.batch}</td>
-                              <td rowSpan={row.attendanceRounds.length}>{row.branch}</td>
-                              <td rowSpan={row.attendanceRounds.length}>{row.name}</td>
-                            </>
-                          )}
-                          <td>{round.label}</td>
-                          <td>
-                            {round.total} / {Math.round((round.presentPercent / 100) * round.total)} (
-                            {round.presentPercent}%)
-                          </td>
-                          <td>
-                            {Math.round((round.absentPercent / 100) * round.total)} (
-                            {round.absentPercent}%)
-                          </td>
-                        </tr>
-                      )),
-                    )}
-                  </tbody>
-                </Table>
+              <div className="d-flex justify-content-end p-2">
+                <Button
+                  variant="outline-brand"
+                  size="sm"
+                  onClick={() => {
+                    setShowFilters((prev) => {
+                      if (prev) setColumnFilters({});
+                      return !prev;
+                    });
+                  }}
+                >
+                  {showFilters ? "Hide Column Filters" : "Show Column Filters"}
+                </Button>
               </div>
+              <Box className="data-grid-container">
+                <DataGrid
+                  rows={displayedRows}
+                  columns={columns}
+                  columnHeaderHeight={showFilters ? 80 : 56}
+                  initialState={{
+                    pagination: { paginationModel: { pageSize: 10 } },
+                  }}
+                  pageSizeOptions={[10, 25, 50]}
+                  onRowClick={handleRowClick}
+                  disableColumnResize
+                  autosizeOnMount
+                  autosizeOptions={{ includeHeaders: false, includeOutliers: true, expand: true }}
+                  slots={{ toolbar: GridToolbar }}
+                  slotProps={{
+                    toolbar: {
+                      showQuickFilter: true,
+                    },
+                  }}
+                />
+              </Box>
             </Card.Body>
           </Card>
 

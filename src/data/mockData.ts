@@ -13,6 +13,7 @@ import dropdownOptionsJson from "./json/dropdownOptions.json";
 import appConfigJson from "./json/appConfig.json";
 import attendanceReportJson from "./json/attendanceReport.json";
 import studentReportJson from "./json/studentReport.json";
+import batchStudentReportJson from "./json/batchStudentReport.json";
 import purposeOptionsJson from "./json/purposeOptions.json";
 
 export interface AttendanceImage {
@@ -68,6 +69,22 @@ export interface StudentReportData {
   records: StudentAttendanceRecord[];
 }
 
+export interface BatchStudentEntry {
+  studentName: string;
+  studentId: string;
+  records: StudentAttendanceRecord[];
+}
+
+export interface BatchStudentReport {
+  course: string;
+  batch: string;
+  college: string;
+  stream: string;
+  overallAttendancePercent: number;
+  batchAverage: number;
+  students: BatchStudentEntry[];
+}
+
 export interface PurposeOption {
   value: string;
   label: string;
@@ -114,6 +131,8 @@ export const BOOTCAMP_BATCH = appConfigJson.bootcampBatch;
 
 export const MOCK_ATTENDANCE_REPORT: AttendanceReportRow[] = attendanceReportJson;
 export const MOCK_STUDENT_REPORT: StudentReportData = studentReportJson as StudentReportData;
+export const MOCK_BATCH_STUDENT_REPORT: BatchStudentReport =
+  batchStudentReportJson as BatchStudentReport;
 
 export function getImageById(id: string): AttendanceImage | undefined {
   return ATTENDANCE_IMAGES.find((img) => img.id === id);
