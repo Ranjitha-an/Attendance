@@ -6,6 +6,8 @@ import imgHexagon from "../assets/images/img-hexagon.svg";
 import imgCross from "../assets/images/img-cross.svg";
 import imgWave from "../assets/images/img-wave.svg";
 import imgDouble from "../assets/images/img-double.svg";
+import imgPattern9 from "../assets/images/img-pattern9.svg";
+import imgPattern10 from "../assets/images/img-pattern10.svg";
 
 import imagesJson from "./json/images.json";
 import groupsJson from "./json/groups.json";
@@ -90,6 +92,11 @@ export interface PurposeOption {
   label: string;
 }
 
+export interface TypedTest {
+  name: string;
+  testType: string;
+}
+
 const IMAGE_FILE_MAP: Record<string, string> = {
   "img-circle.svg": imgCircle,
   "img-square.svg": imgSquare,
@@ -99,6 +106,8 @@ const IMAGE_FILE_MAP: Record<string, string> = {
   "img-cross.svg": imgCross,
   "img-wave.svg": imgWave,
   "img-double.svg": imgDouble,
+  "img-pattern9.svg": imgPattern9,
+  "img-pattern10.svg": imgPattern10,
 };
 
 export const ATTENDANCE_IMAGES: AttendanceImage[] = imagesJson.map((img) => ({
@@ -109,7 +118,8 @@ export const ATTENDANCE_IMAGES: AttendanceImage[] = imagesJson.map((img) => ({
 
 export const ATTENDANCE_GROUPS: AttendanceGroup[] = groupsJson;
 
-export const MAX_GROUPS = ATTENDANCE_IMAGES.length;
+export const MAX_GROUPS = appConfigJson.maxGroups;
+export const IMAGE_POOL_SIZE = ATTENDANCE_IMAGES.length;
 
 export const COURSES = dropdownOptionsJson.courses;
 export const BOOTCAMPS = dropdownOptionsJson.bootcamps;
@@ -117,7 +127,9 @@ export const BATCHES = dropdownOptionsJson.batches;
 export const COLLEGES = dropdownOptionsJson.colleges;
 export const BRANCHES = dropdownOptionsJson.branches;
 export const SUBJECTS = dropdownOptionsJson.subjects;
-export const TESTS = dropdownOptionsJson.tests;
+export const TEST_TYPES = dropdownOptionsJson.testTypes;
+export const TYPED_TESTS: TypedTest[] = dropdownOptionsJson.tests;
+export const BATCH_STUDENT_COUNTS: Record<string, number> = dropdownOptionsJson.batchStudentCounts;
 export const LIVE_CLASSES = dropdownOptionsJson.liveClasses;
 export const REMARK_OPTIONS = dropdownOptionsJson.remarkOptions;
 
@@ -128,6 +140,9 @@ export const EXTEND_SECONDS = appConfigJson.extendSeconds;
 export const MAX_ATTENDANCE_ROUNDS = appConfigJson.maxAttendanceRounds;
 export const BOOTCAMP_COURSE = appConfigJson.bootcampCourse;
 export const BOOTCAMP_BATCH = appConfigJson.bootcampBatch;
+export const MAX_STUDENTS_PER_GROUP = appConfigJson.maxStudentsPerGroup;
+export const MIN_GROUPS = appConfigJson.minGroups;
+export const BOOTCAMP_STUDENT_COUNT = appConfigJson.bootcampStudentCount;
 
 export const MOCK_ATTENDANCE_REPORT: AttendanceReportRow[] = attendanceReportJson;
 export const MOCK_STUDENT_REPORT: StudentReportData = studentReportJson as StudentReportData;
@@ -142,9 +157,50 @@ export function getGroupById(id: string): AttendanceGroup | undefined {
   return ATTENDANCE_GROUPS.find((group) => group.id === id);
 }
 
-export function generateGroups(count: number, totalStudents = 200): AttendanceGroup[] {
+export function getTestsForType(testType: string): string[] {
+  return TYPED_TESTS.filter((t) => t.testType === testType).map((t) => t.name);
+}
+
+export function getTotalStudentsForBatches(batches: string[]): number {
+  return batches.reduce((sum, batch) => sum + (BATCH_STUDENT_COUNTS[batch] ?? 0), 0);
+}
+
+export function computeGroupSplit(
+  totalStudents: number,
+  maxPerGroup = MAX_STUDENTS_PER_GROUP,
+  minGroups = MIN_GROUPS,
+): number[] {
+  if (totalStudents <= 0) return [];
+
+  const neededForCap = Math.ceil(totalStudents / maxPerGroup);
+  const groupCount = Math.min(MAX_GROUPS, Math.max(minGroups, neededForCap));
+  const base = Math.floor(totalStudents / groupCount);
+  const remainder = totalStudents % groupCount;
+  const smallerGroupCount = groupCount - remainder;
+
+  return Array.from({ length: groupCount }, (_, i) =>
+    i < smallerGroupCount ? base : base + 1,
+  );
+}
+
+export function generateGroups(
+  count: number,
+  groupSizes?: number[],
+  totalStudents = 200,
+): AttendanceGroup[] {
   const safeCount = Math.max(1, Math.min(count, MAX_GROUPS));
   const shuffledImages = [...ATTENDANCE_IMAGES].sort(() => Math.random() - 0.5);
+
+  if (groupSizes && groupSizes.length > 0) {
+    const sizes = groupSizes.slice(0, safeCount);
+    return sizes.map((studentCount, i) => ({
+      id: `group-${i + 1}`,
+      name: `Group ${i + 1}`,
+      correctImageId: shuffledImages[i % shuffledImages.length].id,
+      studentCount,
+    }));
+  }
+
   const base = Math.floor(totalStudents / safeCount);
   const remainder = totalStudents % safeCount;
 

@@ -1,53 +1,101 @@
-import { useState } from "react";
-import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap";
+import { useEffect, useMemo, useState } from "react";
+import { Alert, Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import MultiSelectDropdown from "../../components/MultiSelectDropdown";
 import {
   BATCHES,
   BOOTCAMP_BATCH,
+  BOOTCAMP_STUDENT_COUNT,
   BOOTCAMPS,
+  computeGroupSplit,
   COURSES,
   formatCurrentDate,
   getCurrentTime,
-  LIVE_CLASSES,
+  getTestsForType,
+  getTotalStudentsForBatches,
   MAX_GROUPS,
-  PURPOSE_OPTIONS,
   SUBJECTS,
-  TESTS,
+  TEST_TYPES,
 } from "../../data/mockData";
-import type { TrainerSetupState } from "../../types/attendance";
+import type { SetupMode, TrainerSetupState } from "../../types/attendance";
 
 export default function Setup() {
   const navigate = useNavigate();
   const currentDate = formatCurrentDate();
-  const [mode, setMode] = useState<"bootcamp" | "others">("bootcamp");
+  const [setupMode, setSetupMode] = useState<SetupMode>("bootcamp");
   const [bootcamp, setBootcamp] = useState(BOOTCAMPS[0]);
   const [course, setCourse] = useState(COURSES[0]);
   const [batches, setBatches] = useState<string[]>([BATCHES[0]]);
-  const [purpose, setPurpose] = useState("test");
-  const [purposeDetail, setPurposeDetail] = useState(TESTS[0]);
+  const [testType, setTestType] = useState(TEST_TYPES[0]);
+  const [selectedTest, setSelectedTest] = useState(() => getTestsForType(TEST_TYPES[0])[0] ?? "");
+  const [selectedSubject, setSelectedSubject] = useState(SUBJECTS[0]);
   const [time, setTime] = useState(getCurrentTime());
   const [showGroupModal, setShowGroupModal] = useState(false);
-  const [groupCount, setGroupCount] = useState(3);
+  const [splitError, setSplitError] = useState("");
 
-  const handlePurposeChange = (value: string) => {
-    setPurpose(value);
-    if (value === "onsite") setPurposeDetail(SUBJECTS[0]);
-    else if (value === "test") setPurposeDetail(TESTS[0]);
-    else if (value === "live") setPurposeDetail(LIVE_CLASSES[0]);
-    else setPurposeDetail("General");
+  const filteredTests = useMemo(() => getTestsForType(testType), [testType]);
+
+  useEffect(() => {
+    if (!filteredTests.includes(selectedTest)) {
+      setSelectedTest(filteredTests[0] ?? "");
+    }
+  }, [filteredTests, selectedTest]);
+
+  const totalStudents = useMemo(() => {
+    if (setupMode === "bootcamp") return BOOTCAMP_STUDENT_COUNT;
+    return getTotalStudentsForBatches(batches);
+  }, [setupMode, batches]);
+
+  const groupSizes = useMemo(
+    () => (totalStudents > 0 ? computeGroupSplit(totalStudents) : []),
+    [totalStudents],
+  );
+
+  const handleOpenGroupModal = () => {
+    setSplitError("");
+
+    if (setupMode !== "bootcamp" && batches.length === 0) {
+      setSplitError("Please select at least one batch.");
+      setShowGroupModal(true);
+      return;
+    }
+
+    if (totalStudents <= 0) {
+      setSplitError("No students found for the selected batch(es).");
+      setShowGroupModal(true);
+      return;
+    }
+
+    if (groupSizes.length > MAX_GROUPS) {
+      setSplitError(
+        `Cannot split ${totalStudents} students (max ${MAX_GROUPS} groups; ${totalStudents > MAX_GROUPS * 20 ? `reduce batch selection or split into multiple sessions` : `max 20 students per group`}).`,
+      );
+      setShowGroupModal(true);
+      return;
+    }
+
+    setShowGroupModal(true);
   };
 
   const handleGenerateGroups = () => {
+    if (splitError || groupSizes.length === 0) return;
+
     const setupState: TrainerSetupState = {
-      mode,
-      course: mode === "bootcamp" ? bootcamp : course,
-      batches: mode === "bootcamp" ? [BOOTCAMP_BATCH] : batches,
-      purpose,
-      purposeDetail,
+      setupMode,
+      course: setupMode === "bootcamp" ? bootcamp : course,
+      batches: setupMode === "bootcamp" ? [BOOTCAMP_BATCH] : batches,
+      purposeDetail:
+        setupMode === "test"
+          ? selectedTest
+          : setupMode === "onsite"
+            ? selectedSubject
+            : bootcamp,
+      testType: setupMode === "test" ? testType : undefined,
       dateTime: `${currentDate} ${time}`,
-      groupCount,
+      totalStudents,
+      groupSizes,
+      groupCount: groupSizes.length,
     };
     navigate("/trainer/attendance", { state: setupState });
   };
@@ -63,13 +111,14 @@ export default function Setup() {
 
               <Row className="g-3 mb-3">
                 <Col md={6}>
-                  <Form.Label className="filter-label">Bootcamp / Others</Form.Label>
+                  <Form.Label className="filter-label">Session Type</Form.Label>
                   <Form.Select
-                    value={mode}
-                    onChange={(e) => setMode(e.target.value as "bootcamp" | "others")}
+                    value={setupMode}
+                    onChange={(e) => setSetupMode(e.target.value as SetupMode)}
                   >
                     <option value="bootcamp">Bootcamp</option>
-                    <option value="others">Others</option>
+                    <option value="test">Test</option>
+                    <option value="onsite">Onsite Workshop</option>
                   </Form.Select>
                 </Col>
                 <Col md={3}>
@@ -86,7 +135,7 @@ export default function Setup() {
                 </Col>
               </Row>
 
-              {mode === "bootcamp" && (
+              {setupMode === "bootcamp" && (
                 <Row className="g-3 mb-3">
                   <Col md={6}>
                     <Form.Label className="filter-label">Select Bootcamp</Form.Label>
@@ -101,7 +150,7 @@ export default function Setup() {
                 </Row>
               )}
 
-              {mode === "others" && (
+              {setupMode === "test" && (
                 <>
                   <Row className="g-3 mb-3">
                     <Col md={6}>
@@ -115,18 +164,56 @@ export default function Setup() {
                       </Form.Select>
                     </Col>
                     <Col md={6}>
-                      <Form.Label className="filter-label">Purpose</Form.Label>
-                      <Form.Select value={purpose} onChange={(e) => handlePurposeChange(e.target.value)}>
-                        {PURPOSE_OPTIONS.map((p) => (
-                          <option key={p.value} value={p.value}>
-                            {p.label}
+                      <Form.Label className="filter-label">Batch (multiple selection)</Form.Label>
+                      <MultiSelectDropdown
+                        options={BATCHES}
+                        selected={batches}
+                        onChange={setBatches}
+                        placeholder="Select batches"
+                      />
+                    </Col>
+                  </Row>
+                  <Row className="g-3 mb-3">
+                    <Col md={6}>
+                      <Form.Label className="filter-label">Test Type</Form.Label>
+                      <Form.Select value={testType} onChange={(e) => setTestType(e.target.value)}>
+                        {TEST_TYPES.map((tt) => (
+                          <option key={tt} value={tt}>
+                            {tt}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Label className="filter-label">Select Test</Form.Label>
+                      <Form.Select
+                        value={selectedTest}
+                        onChange={(e) => setSelectedTest(e.target.value)}
+                      >
+                        {filteredTests.map((t) => (
+                          <option key={t} value={t}>
+                            {t}
                           </option>
                         ))}
                       </Form.Select>
                     </Col>
                   </Row>
+                </>
+              )}
 
+              {setupMode === "onsite" && (
+                <>
                   <Row className="g-3 mb-3">
+                    <Col md={6}>
+                      <Form.Label className="filter-label">Course</Form.Label>
+                      <Form.Select value={course} onChange={(e) => setCourse(e.target.value)}>
+                        {COURSES.map((c) => (
+                          <option key={c} value={c}>
+                            {c}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Col>
                     <Col md={6}>
                       <Form.Label className="filter-label">Batch (multiple selection)</Form.Label>
                       <MultiSelectDropdown
@@ -136,70 +223,27 @@ export default function Setup() {
                         placeholder="Select batches"
                       />
                     </Col>
+                  </Row>
+                  <Row className="g-3 mb-3">
                     <Col md={6}>
-                      {purpose === "onsite" && (
-                        <>
-                          <Form.Label className="filter-label">Select Subject</Form.Label>
-                          <Form.Select
-                            value={purposeDetail}
-                            onChange={(e) => setPurposeDetail(e.target.value)}
-                          >
-                            {SUBJECTS.map((s) => (
-                              <option key={s} value={s}>
-                                {s}
-                              </option>
-                            ))}
-                          </Form.Select>
-                        </>
-                      )}
-                      {purpose === "test" && (
-                        <>
-                          <Form.Label className="filter-label">Select Test</Form.Label>
-                          <Form.Select
-                            value={purposeDetail}
-                            onChange={(e) => setPurposeDetail(e.target.value)}
-                          >
-                            {TESTS.map((t) => (
-                              <option key={t} value={t}>
-                                {t}
-                              </option>
-                            ))}
-                          </Form.Select>
-                        </>
-                      )}
-                      {purpose === "live" && (
-                        <>
-                          <Form.Label className="filter-label">Select Live Classes</Form.Label>
-                          <Form.Select
-                            value={purposeDetail}
-                            onChange={(e) => setPurposeDetail(e.target.value)}
-                          >
-                            {LIVE_CLASSES.map((lc) => (
-                              <option key={lc} value={lc}>
-                                {lc}
-                              </option>
-                            ))}
-                          </Form.Select>
-                        </>
-                      )}
-                      {purpose === "others" && (
-                        <>
-                          <Form.Label className="filter-label">Purpose Detail</Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={purposeDetail}
-                            onChange={(e) => setPurposeDetail(e.target.value)}
-                            placeholder="Enter purpose"
-                          />
-                        </>
-                      )}
+                      <Form.Label className="filter-label">Select Subject</Form.Label>
+                      <Form.Select
+                        value={selectedSubject}
+                        onChange={(e) => setSelectedSubject(e.target.value)}
+                      >
+                        {SUBJECTS.map((s) => (
+                          <option key={s} value={s}>
+                            {s}
+                          </option>
+                        ))}
+                      </Form.Select>
                     </Col>
                   </Row>
                 </>
               )}
 
               <div className="d-flex flex-wrap gap-2 mt-4">
-                <Button className="btn-brand" onClick={() => setShowGroupModal(true)}>
+                <Button className="btn-brand" onClick={handleOpenGroupModal}>
                   Trigger Attendance
                 </Button>
                 <Button
@@ -216,33 +260,35 @@ export default function Setup() {
 
       <Modal show={showGroupModal} onHide={() => setShowGroupModal(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Split into Groups</Modal.Title>
+          <Modal.Title>Automatic Group Split</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form.Label className="filter-label">
-            How many groups do you want to split the students into?
-          </Form.Label>
-          <Form.Control
-            type="number"
-            min={1}
-            max={MAX_GROUPS}
-            value={groupCount}
-            onChange={(e) => {
-              const value = Number(e.target.value);
-              if (Number.isNaN(value)) return;
-              setGroupCount(Math.max(1, Math.min(value, MAX_GROUPS)));
-            }}
-          />
-          <Form.Text className="text-muted">
-            You can create between 1 and {MAX_GROUPS} groups. Each group gets its own image to
-            show.
-          </Form.Text>
+          {splitError ? (
+            <Alert variant="danger" className="mb-0">
+              {splitError}
+            </Alert>
+          ) : (
+            <>
+              <p className="mb-2">
+                <strong>{totalStudents}</strong> students will be split into{" "}
+                <strong>{groupSizes.length}</strong> group{groupSizes.length !== 1 ? "s" : ""} (max
+                20 students per group):
+              </p>
+              <p className="text-muted mb-0">
+                {groupSizes.map((size, i) => `Group ${i + 1}: ${size}`).join(" · ")}
+              </p>
+            </>
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="outline-secondary" onClick={() => setShowGroupModal(false)}>
             Cancel
           </Button>
-          <Button className="btn-brand" onClick={handleGenerateGroups}>
+          <Button
+            className="btn-brand"
+            onClick={handleGenerateGroups}
+            disabled={!!splitError || groupSizes.length === 0}
+          >
             Generate Groups
           </Button>
         </Modal.Footer>

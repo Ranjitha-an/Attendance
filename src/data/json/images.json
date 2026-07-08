@@ -6,5 +6,7 @@
   { "id": "hexagon", "label": "Pattern E", "file": "img-hexagon.svg" },
   { "id": "cross", "label": "Pattern F", "file": "img-cross.svg" },
   { "id": "wave", "label": "Pattern G", "file": "img-wave.svg" },
-  { "id": "double", "label": "Pattern H", "file": "img-double.svg" }
+  { "id": "double", "label": "Pattern H", "file": "img-double.svg" },
+  { "id": "pattern9", "label": "Pattern I", "file": "img-pattern9.svg" },
+  { "id": "pattern10", "label": "Pattern J", "file": "img-pattern10.svg" }
 ]

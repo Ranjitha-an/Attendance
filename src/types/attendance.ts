@@ -1,10 +1,14 @@
+export type SetupMode = "bootcamp" | "test" | "onsite";
+
 export interface TrainerSetupState {
-  mode: "bootcamp" | "others";
+  setupMode: SetupMode;
   course: string;
   batches: string[];
-  purpose: string;
   purposeDetail: string;
+  testType?: string;
   dateTime: string;
+  totalStudents: number;
+  groupSizes: number[];
   groupCount: number;
 }
 

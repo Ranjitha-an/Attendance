@@ -18,6 +18,7 @@ export default function Attendance() {
   const location = useLocation();
   const setupState = location.state as TrainerSetupState | null;
   const groupCount = setupState?.groupCount ?? 3;
+  const groupSizes = setupState?.groupSizes;
   const currentRound = 1;
 
   const [timerSeconds, setTimerSeconds] = useState(DEFAULT_TIMER_SECONDS);
@@ -25,7 +26,7 @@ export default function Attendance() {
   const [headCount, setHeadCount] = useState<number | "">("");
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [groups, setGroups] = useState<AttendanceGroup[]>(() =>
-    setupState ? generateGroups(groupCount) : [],
+    setupState ? generateGroups(groupCount, groupSizes) : [],
   );
   const groupsGenerated = groups.length > 0;
 
@@ -44,7 +45,7 @@ export default function Attendance() {
   const stats = getRoundStats(currentRound);
 
   const handleRelaunch = () => {
-    setGroups(generateGroups(groupCount));
+    setGroups(generateGroups(groupCount, groupSizes));
     setTimerSeconds(DEFAULT_TIMER_SECONDS);
     setIsActive(true);
   };
@@ -125,12 +126,28 @@ export default function Attendance() {
                     <strong>{setupState.batches.join(", ")}</strong>
                   </Col>
                   <Col md={3}>
-                    <span className="filter-label d-block">Purpose</span>
+                    <span className="filter-label d-block">
+                      {setupState.setupMode === "test"
+                        ? "Test"
+                        : setupState.setupMode === "onsite"
+                          ? "Subject"
+                          : "Session"}
+                    </span>
                     <strong>{setupState.purposeDetail}</strong>
                   </Col>
                   <Col md={3}>
                     <span className="filter-label d-block">Date</span>
                     <strong>{setupState.dateTime}</strong>
+                  </Col>
+                  {setupState.setupMode === "test" && setupState.testType && (
+                    <Col md={3} className="mt-2">
+                      <span className="filter-label d-block">Test Type</span>
+                      <strong>{setupState.testType}</strong>
+                    </Col>
+                  )}
+                  <Col md={3} className="mt-2">
+                    <span className="filter-label d-block">Total Students</span>
+                    <strong>{setupState.totalStudents}</strong>
                   </Col>
                 </Row>
               </Card.Body>

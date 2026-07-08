@@ -5,7 +5,26 @@
   "colleges": ["All Colleges", "MRIT College", "EWIT College"],
   "branches": ["All", "CSE", "ISE", "ECE"],
   "subjects": ["SQL Workshop", "React Basics", "Python Fundamentals"],
-  "tests": ["Final Test", "Practice Test", "Mock Test", "Drive Test"],
+  "testTypes": ["Final Test", "Practice Test"],
+  "tests": [
+    { "name": "MRIT Final Test", "testType": "Final Test" },
+    { "name": "MRIT Practice Test", "testType": "Practice Test" },
+    { "name": "EWIT Final Test", "testType": "Final Test" },
+    { "name": "EWIT Practice Test", "testType": "Practice Test" },
+    { "name": "BMSIT Final Test", "testType": "Final Test" },
+    { "name": "BMSIT Practice Test", "testType": "Practice Test" },
+    { "name": "RVCE Final Test", "testType": "Final Test" },
+    { "name": "RVCE Practice Test", "testType": "Practice Test" },
+    { "name": "PES Final Test", "testType": "Final Test" },
+    { "name": "PES Practice Test", "testType": "Practice Test" }
+  ],
+  "batchStudentCounts": {
+    "MRIT": 48,
+    "EWIT": 51,
+    "BMSIT": 100,
+    "RVCE": 35,
+    "PES": 49
+  },
   "liveClasses": ["Live Class 1", "Live Class 2", "Live Class 3"],
   "remarkOptions": [
     "SELECTED WRONG IMAGE",

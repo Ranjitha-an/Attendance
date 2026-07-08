@@ -2,6 +2,10 @@
   "defaultTimerSeconds": 15,
   "extendSeconds": 15,
   "maxAttendanceRounds": 3,
+  "maxStudentsPerGroup": 20,
+  "minGroups": 3,
+  "maxGroups": 10,
+  "bootcampStudentCount": 200,
   "bootcampCourse": "Full Stack Bootcamp",
   "bootcampBatch": "Bootcamp Batch",
   "roundStats": [
