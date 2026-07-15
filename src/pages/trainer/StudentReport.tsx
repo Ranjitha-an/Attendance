@@ -212,12 +212,6 @@ export default function StudentReport() {
               </Box>
             </Card.Body>
           </Card>
-
-          <div className="mt-3">
-            <Button variant="outline-secondary" onClick={() => navigate("/trainer/report")}>
-              Back to Report
-            </Button>
-          </div>
         </Container>
       </main>
     </>

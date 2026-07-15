@@ -44,12 +44,6 @@ export default function Attendance() {
 
   const stats = getRoundStats(currentRound);
 
-  const handleRelaunch = () => {
-    setGroups(generateGroups(groupCount, groupSizes));
-    setTimerSeconds(DEFAULT_TIMER_SECONDS);
-    setIsActive(true);
-  };
-
   const handleExtend = () => {
     setTimerSeconds((prev) => prev + EXTEND_SECONDS);
     setIsActive(true);
@@ -207,9 +201,6 @@ export default function Attendance() {
               <div className="d-flex flex-wrap gap-2 mb-4">
                 <Button variant="outline-brand" onClick={handleExtend}>
                   Extend (+{EXTEND_SECONDS}s)
-                </Button>
-                <Button variant="outline-secondary" onClick={handleRelaunch}>
-                  Relaunch
                 </Button>
                 {groupsGenerated && (
                   <Button variant="outline-brand" onClick={() => setShowPreviewModal(true)}>
